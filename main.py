@@ -1,6 +1,12 @@
 """
 Виконав: Григорій Чернолуцький
-Homework_12
+Homework_13
+
+Package                      Version
+---------------------------- -----------
+pip                          24.3.1
+numpy                        2.1.3
+matplotlib                   3.9.2
 
 """
 import os
@@ -10,9 +16,15 @@ import time
 
 import numpy as np
 from matplotlib import pyplot as plt
+
+from searching_engines.binary_search_tree_class import BinThree
+from searching_engines.binary_search_tree_recursion import insert_node, search_node_recursion
 from sorting_engines import sort_sort, np_sort_stable, np_sort_heapsort, np_sort_quicksort, \
     np_sort_mergesort, bubble_sort, quick_sort_array, merge_sort_array, insertion_sort, coolest_sort, tim_sort
 from dao import save_bin_file, read_bin_file
+from searching_engines import np_search, linear_search_one_element, linear_search_many_elements, \
+    interpolation_search_r, interpolation_search_iterative, binary_search_iterative, \
+    binary_search_many, binary_search_r
 
 
 def show_result_image(S, text) -> None:
@@ -84,9 +96,74 @@ def init_test(a, b, iter, type) -> np.array:
         print(f"Час генерації набору випадкових чисел: {execution_time:.6f} секунд")
 
         save_bin_file(random_arr, filename_start)  # запис випадкового масиву у файл
-    show_result_image(random_arr, 'random.uniform')  # графік візуалізації вхідних не сортованих даних
+    # show_result_image(random_arr, 'random.uniform')  # графік візуалізації вхідних не сортованих даних
     return random_arr
 
+def sort_array(unsorted_arr, a, b, iter, type) -> np.array:
+    """
+    Метод видає в результаті відсортований масив
+    :param unsorted_arr: Невідсортований масив
+    :param a: Початок діапазону випадкових чисел
+    :param b: Кінець діапазону випадкових чисел
+    :param iter: Кількість випадкових чисел
+    :param type: Тип випадкових чисел
+    :return: Відсортований(здобутий де інде) масив випадкових чисел
+    """
+    sorted_arr_filename = 'data_sets/sorted_' + str(a) + "_" + str(b) + "_" + str(iter) + "_" + type + '.pkl'
+    if os.path.exists(sorted_arr_filename):
+        sorted_arr = read_bin_file(sorted_arr_filename)
+    else:
+        # sys.setrecursionlimit(10000)
+        # sorted_arr = bubble_sort(unsorted_arr.copy())  # сортування бульбашкою 55s 0-100 10000 int
+        # sorted_arr = insertion_sort(unsorted_arr.copy())  # 25s 0-1000 10000 int
+        # sorted_arr = quick_sort_array(unsorted_arr.copy())
+        # sorted_arr = np.array(merge_sort_array(unsorted_arr.copy()))
+        # sorted_arr = np_sort_quicksort(unsorted_arr.copy())
+        # sorted_arr = np_sort_mergesort(unsorted_arr.copy())
+        # sorted_arr = np_sort_heapsort(unsorted_arr.copy())
+        # sorted_arr = np_sort_stable(unsorted_arr.copy())
+        # sorted_arr = np.array(coolest_sort(unsorted_arr.copy()))  # Timsort вбудоване  (create new array)
+        sorted_arr = sort_sort(unsorted_arr.copy())  # алгоритм Timsort вбудоване (use old array)
+        # sorted_arr = tim_sort(unsorted_arr.copy())  # Timsort
+    return sorted_arr
+
+def looking_for(sorted_arr, key) -> None:
+    """
+    Метод щось шукає
+    :param sorted_arr: Відсоортований масив
+    :param key: Елемент який будемо шукати
+    :return:
+    """
+    sys.setrecursionlimit(10000)
+    print(f"key = {key}")
+    print(np_search(key, sorted_arr))
+    print(linear_search_one_element(key, sorted_arr))
+    print(linear_search_many_elements(key, sorted_arr))
+    print(interpolation_search_r(sorted_arr, key))  # екстраполяційний пошук
+    print(interpolation_search_iterative(sorted_arr, key))
+    print(binary_search_r(sorted_arr, key))       # бінарний пошук
+    print(binary_search_many(sorted_arr, key))
+    print(binary_search_iterative(sorted_arr, key))
+    root = None
+    root = insert_node(root, unsorted_arr[0])
+    for i in range(1,iter):
+        insert_node(root, unsorted_arr[i])
+    found =  search_node_recursion(root, key)
+    if found is None:
+        print(key, "not found")
+    else:
+        print(found.key, "found")
+
+    three = BinThree()
+    for i in range(iter):
+        three.insert(unsorted_arr[i])
+
+    found = three.search(key)
+    if found is None:
+        print(key, "not found")
+    else:
+        print(found.key, "found")
+    return None
 
 def finalize_test(arr, a, b, iter, type) -> None:
     """
@@ -98,9 +175,10 @@ def finalize_test(arr, a, b, iter, type) -> None:
     :param type: Тип випадкових чисел
     :return: нічого
     """
-    filename_stop = 'data_sets/sorted_' + str(a) + "_" + str(b) + "_" + str(iter) + "_" + type + '.pkl'
+    sorted_arr_filename = 'data_sets/sorted_' + str(a) + "_" + str(b) + "_" + str(iter) + "_" + type + '.pkl'
     show_result_image(arr, 'random.uniform.sort')  # графік візуалізації сортованих даних
-    save_bin_file(arr, filename_stop)  # запис сортованого масиву у файл
+    if os.path.exists(sorted_arr_filename):
+        save_bin_file(arr, sorted_arr_filename)  # запис сортованого масиву у файл
     return None
 
 
@@ -108,28 +186,19 @@ def finalize_test(arr, a, b, iter, type) -> None:
 if __name__ == '__main__':
     # ---------------------- вихідні параметри об'єкта сортування ----------------------------
     begin = 0
-    end = 1_000
-    iter = 10_000
+    end = 10000
+    iter = 100_000_000
     type = 'int'
     unsorted_arr = init_test(begin, end, iter, type)
-    sys.setrecursionlimit(10000)
-    sorted_arr = bubble_sort(unsorted_arr.copy())  # сортування бульбашкою 55s 0-100 10000 int
-    sorted_arr = insertion_sort(unsorted_arr.copy())  # 25s 0-1000 10000 int
-    sorted_arr = quick_sort_array(unsorted_arr.copy())
-    sorted_arr = merge_sort_array(unsorted_arr.copy())
-    sorted_arr = np_sort_quicksort(unsorted_arr.copy())
-    sorted_arr = np_sort_mergesort(unsorted_arr.copy())
-    sorted_arr = np_sort_heapsort(unsorted_arr.copy())
-    sorted_arr = np_sort_stable(unsorted_arr.copy())
-    sorted_arr = coolest_sort(unsorted_arr.copy())  # Timsort вбудоване  (create new array)
-    sorted_arr = sort_sort(unsorted_arr.copy())  # алгоритм Timsort вбудоване (use old array)
-    sorted_arr = tim_sort(unsorted_arr.copy())  # Timsort
+    sorted_arr = sort_array(unsorted_arr, begin, end, iter, type)
+    key = unsorted_arr[random.randint(0, iter)]
+    looking_for(sorted_arr, key)
     finalize_test(sorted_arr, begin, end, iter, type)
 
 """
 РЕЗУЛЬТАТ
 
-Файл compare_all.txt - збір всіх результатів тестування в скороченому варіанті
-Файл compare_full.txt - приклад детального варіанту розбору результату
+# Файл compare_all.txt - збір всіх результатів тестування в скороченому варіанті
+# Файл compare_full.txt - приклад детального варіанту розбору результату
 
 """
