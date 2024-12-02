@@ -2,3 +2,5 @@ from searching_engines.build_in_serch import np_search
 from searching_engines.sequential_search import linear_search_one_element, linear_search_many_elements
 from searching_engines.interpolation_search import interpolation_search_iterative, interpolation_search_r
 from searching_engines.binary_search import binary_search_iterative, binary_search_r, binary_search_many
+from searching_engines.binary_search_tree_class import BinThree
+from searching_engines.binary_search_tree_recursion import insert_node, search_node_recursion

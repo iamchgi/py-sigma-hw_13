@@ -17,57 +17,55 @@ import time
 import numpy as np
 from matplotlib import pyplot as plt
 
-from searching_engines.binary_search_tree_class import BinThree
-from searching_engines.binary_search_tree_recursion import insert_node, search_node_recursion
 from sorting_engines import sort_sort, np_sort_stable, np_sort_heapsort, np_sort_quicksort, \
     np_sort_mergesort, bubble_sort, quick_sort_array, merge_sort_array, insertion_sort, coolest_sort, tim_sort
 from dao import save_bin_file, read_bin_file
 from searching_engines import np_search, linear_search_one_element, linear_search_many_elements, \
     interpolation_search_r, interpolation_search_iterative, binary_search_iterative, \
-    binary_search_many, binary_search_r
+    binary_search_many, binary_search_r, insert_node, search_node_recursion, BinThree
 
 
-def show_result_image(S, text) -> None:
+def show_result_image(s, text) -> None:
     """
     Функція візуалізації дискретного ряду
-    :param S: вхідний масив дискретних даних
+    :param s: вхідний масив дискретних даних
     :param text: повідомлення
     :return: нічого
     """
-    plt.plot(S)
+    plt.plot(s)
     plt.ylabel(text)
     plt.show()
     return None
 
 
 # ----------------------- рівномірний закон розводілу - десяткове числення -----------------------
-def random_uniform(a, b, iter) -> np.array:
+def random_uniform(a, b, n) -> np.array:
     """
     Функція генерування випадкових величин за рівномірним законом - float
     :param a: ліва межа зміни значень / довірчого інтервала
     :param b: права межа зміни значень / довірчого інтервала
-    :param iter: кількість елементів, що генерується
+    :param n: кількість елементів, що генерується
     :return: вибірка значень рівномірно розподілених в межах a, b, з кількістю iter - десяткова система числення
     """
-    S = np.zeros((iter))
-    for i in range(iter):
-        S[i] = np.random.uniform(a, b)  # параметри закону задаються межами аргументу
-    return S
+    s = np.zeros(n)
+    for i in range(n):
+        s[i] = np.random.uniform(a, b)  # параметри закону задаються межами аргументу
+    return s
 
 
 # ----------------------- рівномірний закон розподілу - цілі числа -----------------------
-def random_uniform_int(a, b, iter) -> np.array:
+def random_uniform_int(a, b, n) -> np.array:
     """
     Функція генерування випадкових величин за рівномірним законом з параметрами - int
     :param a: ліва межа зміни значень / довірчого інтервала
     :param b: права межа зміни значень / довірчого інтервала
-    :param iter: кількість елементів, що генерується
+    :param n: кількість елементів, що генерується
     :return: вибірка значень рівномірно розподілених в межах a, b, з кількістю iter - десяткова система числення
     """
-    S = np.zeros(iter, dtype=int)
-    for i in range(iter):
-        S[i] = random.randint(a, b)  # параметри закону задаються межами аргументу
-    return S
+    s = np.zeros(n, dtype=int)
+    for i in range(n):
+        s[i] = random.randint(a, b)  # параметри закону задаються межами аргументу
+    return s
 
 
 def init_test(a, b, iter, type) -> np.array:
@@ -90,14 +88,14 @@ def init_test(a, b, iter, type) -> np.array:
         else:
             # ---------------------- сортування випадкового масиву float ---------------------------
             random_arr = random_uniform(a, b, iter)
-        end_time = time.time()
         # Різниця часу
-        execution_time = end_time - start_time
+        execution_time = time.time() - start_time
         print(f"Час генерації набору випадкових чисел: {execution_time:.6f} секунд")
 
         save_bin_file(random_arr, filename_start)  # запис випадкового масиву у файл
-    # show_result_image(random_arr, 'random.uniform')  # графік візуалізації вхідних не сортованих даних
+    show_result_image(random_arr, 'random.uniform')  # графік візуалізації вхідних не сортованих даних
     return random_arr
+
 
 def sort_array(unsorted_arr, a, b, iter, type) -> np.array:
     """
@@ -127,6 +125,7 @@ def sort_array(unsorted_arr, a, b, iter, type) -> np.array:
         # sorted_arr = tim_sort(unsorted_arr.copy())  # Timsort
     return sorted_arr
 
+
 def looking_for(sorted_arr, key) -> None:
     """
     Метод щось шукає
@@ -141,29 +140,36 @@ def looking_for(sorted_arr, key) -> None:
     print(linear_search_many_elements(key, sorted_arr))
     print(interpolation_search_r(sorted_arr, key))  # екстраполяційний пошук
     print(interpolation_search_iterative(sorted_arr, key))
-    print(binary_search_r(sorted_arr, key))       # бінарний пошук
+    print(binary_search_r(sorted_arr, key))  # бінарний пошук
     print(binary_search_many(sorted_arr, key))
     print(binary_search_iterative(sorted_arr, key))
+    start_time = time.time()
     root = None
     root = insert_node(root, unsorted_arr[0])
-    for i in range(1,iter):
+    for i in range(1, iter):
         insert_node(root, unsorted_arr[i])
-    found =  search_node_recursion(root, key)
+    # Різниця часу
+    execution_time = time.time() - start_time
+    print(f"Час створення recursion three: {execution_time:.6f} секунд")
+    found = search_node_recursion(root, key)
     if found is None:
         print(key, "not found")
     else:
         print(found.key, "found")
-
+    start_time = time.time()
     three = BinThree()
     for i in range(iter):
         three.insert(unsorted_arr[i])
-
+    # Різниця часу
+    execution_time = time.time() - start_time
+    print(f"Час створення class three: {execution_time:.6f} секунд")
     found = three.search(key)
     if found is None:
         print(key, "not found")
     else:
         print(found.key, "found")
     return None
+
 
 def finalize_test(arr, a, b, iter, type) -> None:
     """
@@ -186,8 +192,8 @@ def finalize_test(arr, a, b, iter, type) -> None:
 if __name__ == '__main__':
     # ---------------------- вихідні параметри об'єкта сортування ----------------------------
     begin = 0
-    end = 10000
-    iter = 100_000_000
+    end = 10_000
+    iter = 10_000
     type = 'int'
     unsorted_arr = init_test(begin, end, iter, type)
     sorted_arr = sort_array(unsorted_arr, begin, end, iter, type)

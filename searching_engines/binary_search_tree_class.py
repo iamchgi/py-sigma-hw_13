@@ -40,7 +40,7 @@ class BinThree:
 
     @busy_time_meter
     # Функція пошуку ключа в BST
-    def search(self, key):
+    def search(self, key) -> Node:
         # Базові випадки: root має значення null або ключ присутній у корені
         # if self.root is None or self.root.key == key:
         #     return self.root
