@@ -1,0 +1,77 @@
+key = 3962
+         3 function calls in 0.015 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.015    0.015    0.015    0.015 build_in_serch.py:6(np_search)
+        1    0.000    0.000    0.000    0.000 multiarray.py:363(where)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - np_search            час виконання: 0.058965 секунд
+(array([3865]),)
+         3 function calls in 0.023 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.022    0.022    0.022    0.022 sequential_search.py:10(linear_search_one_element)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - linear_search_one_element час виконання: 0.022990 секунд
+3865
+         4 function calls in 0.007 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.007    0.007    0.007    0.007 sequential_search.py:23(linear_search_many_elements)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - linear_search_many_elements час виконання: 0.008990 секунд
+[3865]
+         3856 function calls (4 primitive calls) in 0.028 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   3853/1    0.028    0.000    0.028    0.028 interpolation_search.py:17(interpolation_search_recursive)
+        1    0.000    0.000    0.028    0.028 interpolation_search.py:42(interpolation_search_r)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - interpolation_search_r час виконання: 0.028986 секунд
+3865
+         3 function calls in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 interpolation_search.py:46(interpolation_search_iterative)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - interpolation_search_iterative час виконання: 0.000000 секунд
+3865
+         17 function calls (4 primitive calls) in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     14/1    0.000    0.000    0.000    0.000 binary_search.py:15(binary_search_recursive)
+        1    0.000    0.000    0.000    0.000 binary_search.py:40(binary_search_r)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - binary_search_r      час виконання: 0.000998 секунд
+3865
+         30 function calls (17 primitive calls) in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     14/1    0.000    0.000    0.000    0.000 binary_search.py:45(binary_search_many_elements)
+        1    0.000    0.000    0.000    0.000 binary_search.py:71(binary_search_many)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+       13    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - binary_search_many   час виконання: 0.001998 секунд
+[[[[[[[[[[[[[3865]]]]]]]]]]]]]
+         3 function calls in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 binary_search.py:75(binary_search_iterative)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - binary_search_iterative час виконання: 0.001000 секунд
+3865
+Час створення recursion three: 0.059964 секунд
+         15 function calls (3 primitive calls) in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     13/1    0.000    0.000    0.000    0.000 binary_search_tree_recursion.py:32(search_node)
+        1    0.000    0.000    0.000    0.000 binary_search_tree_recursion.py:42(search_node_recursion)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - search_node_recursion час виконання: 0.001000 секунд
+3962 found
+Час створення class three: 0.076956 секунд
+         2 function calls in 0.000 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 binary_search_tree_class.py:41(search)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+Функція - search               час виконання: 0.001004 секунд
+3962 found
